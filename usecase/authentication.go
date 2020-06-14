@@ -19,7 +19,7 @@ func NewAuthenticationUseCase(authRepo repository.AuthRepository) Authentication
 func (a *authenticationUseCase) Register(ctx context.Context, username, password, profileName, email, phone string) error {
 	u, err := authentication.NewUser(username, password, profileName, email, phone)
 	if err != nil {
-		return nil
+		return err
 	}
 
 	err = a.authRepo.CreateUser(ctx, u)
@@ -29,7 +29,7 @@ func (a *authenticationUseCase) Register(ctx context.Context, username, password
 func (a *authenticationUseCase) Login(ctx context.Context, username, password string) (string, error) {
 	u, err := a.authRepo.GetUserByUsername(ctx, username)
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 
 	m := u.CheckPassword(password)
@@ -48,7 +48,7 @@ func (a *authenticationUseCase) ChangePassword(ctx context.Context, user *authen
 
 	err := user.SetPassword(password)
 	if err != nil {
-		return nil
+		return err
 	}
 
 	err = a.authRepo.UpdateUser(ctx, user)

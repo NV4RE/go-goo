@@ -1,11 +1,11 @@
 steps:
-  - name: "gcr.io/$PROJECT_ID/sonar-scanner:latest"
+  - name: "sonarsource/sonar-scanner-cli:latest"
     args:
       - "-Dsonar.host.url=https://sonarqube.nv4re.com"
       - "-Dsonar.login=274fd6374dfc46e28d7d4e9b5a7a32ec15cbfca9"
       - "-Dsonar.projectKey=project-1"
       - "-Dsonar.sources=."
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/my-project/my-image", "."]
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/$REPO_NAME", "."]
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/my-project/my-image"]
+    args: ["push", "gcr.io/$PROJECT_ID/$REPO_NAME"]

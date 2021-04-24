@@ -1,13 +1,13 @@
 steps:
   - name: 'ubuntu'
-    args: [ 'echo', '$SONARQUBE_TOKEN' ]
+    args: [ 'echo', '$$SONARQUBE_TOKEN' ]
     secretEnv: ['SONARQUBE_TOKEN']
   - name: "sonarsource/sonar-scanner-cli:latest"
     entrypoint: "sh"
     args:
       - "-c"
       - |
-        sonar-scanner -Dsonar.host.url=https://sonarqube.nv4re.com -Dsonar.login=$SONARQUBE_TOKEN -Dsonar.projectKey=$REPO_NAME -Dsonar.sources=. || true
+        sonar-scanner -Dsonar.host.url=https://sonarqube.nv4re.com -Dsonar.login=$$SONARQUBE_TOKEN -Dsonar.projectKey=$REPO_NAME -Dsonar.sources=. || true
     secretEnv: ['SONARQUBE_TOKEN']
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/$PROJECT_ID/$REPO_NAME", "."]

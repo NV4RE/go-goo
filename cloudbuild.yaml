@@ -1,6 +1,6 @@
 steps:
   - name: 'ubuntu'
-    args: [ 'echo', '$SONAQUBE_TOKEN' ]
+    args: [ 'echo', '$SONARQUBE_TOKEN' ]
   - name: "sonarsource/sonar-scanner-cli:latest"
     entrypoint: "sh"
     args:
